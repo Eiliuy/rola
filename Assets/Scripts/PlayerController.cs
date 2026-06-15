@@ -170,10 +170,23 @@ public class PlayerController : MonoBehaviour
         if (attackPoint == null) return;
 
         Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        bool hasHit = false;
+
         foreach (var enemy in enemies)
         {
-            // TODO: 后续让敌人实现 IDamageable 接口
-            Debug.Log($"命中敌人: {enemy.name}, 伤害: {attackDamage}");
+            IDamageable damageable = enemy.GetComponent<IDamageable>();
+            if (damageable != null && !damageable.IsInvincible)
+            {
+                Vector2 knockback = new Vector2(isFacingRight ? 1f : -1f, 0.5f);
+                damageable.TakeDamage(attackDamage, knockback, transform.position);
+                hasHit = true;
+            }
+        }
+
+        if (hasHit)
+        {
+            HitStopManager.Instance?.TriggerHitStop(0.05f);
+            CameraShake.Instance?.Shake(0.08f, 0.08f);
         }
     }
 
