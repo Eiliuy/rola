@@ -1,14 +1,15 @@
 using UnityEngine;
 
 /// <summary>
-/// 玩家角色控制器（基础版）
-/// 包含：移动、跳跃、攻击、闪避、受伤
+/// 玩家角色控制器（连招版）
+/// 包含：移动、跳跃、攻击连招、闪避、受伤、下劈
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
     [Header("移动")]
     public float moveSpeed = 5f;
     public float jumpForce = 12f;
+    public float airControlFactor = 0.7f;
 
     [Header("地面检测")]
     public Transform groundCheck;
@@ -22,12 +23,20 @@ public class PlayerController : MonoBehaviour
     public bool isInvincibleDuringDash = true;
 
     [Header("攻击")]
-    public float attackDuration = 0.3f;
-    public float attackCooldown = 0.4f;
     public Transform attackPoint;
+    public Transform airSlamAttackPoint;
     public float attackRange = 1f;
     public LayerMask enemyLayer;
-    public int attackDamage = 10;
+
+    [Header("地面连招")]
+    public AttackData[] groundCombo = new AttackData[3];
+
+    [Header("空中连招")]
+    public AttackData[] airCombo = new AttackData[2];
+
+    [Header("下劈")]
+    public AttackData airSlam;
+    public float airSlamSpeed = 20f;
 
     [Header("组件")]
     public Animator animator;
@@ -38,28 +47,62 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private bool jumpInput;
     private bool attackInput;
+    private bool slamInput;
     private bool dashInput;
 
     // 状态
     private bool isGrounded;
     private bool isFacingRight = true;
     private bool isDashing = false;
-    private bool isAttacking = false;
+    private bool isHurt = false;
+
+    // 连招
+    private enum AttackPhase { None, Startup, Active, Recovery }
+    private AttackPhase attackPhase = AttackPhase.None;
+    private int currentComboIndex = 0;
+    private float phaseTimer = 0f;
+    private bool hasHit = false;
+    private bool inputBuffered = false;
+
+    private enum PlayerState { Idle, Run, Jump, Fall, Attack, Dash, Hurt }
+    private PlayerState currentState = PlayerState.Idle;
 
     // 计时器
     private float dashTimer;
     private float dashCooldownTimer;
-    private float attackTimer;
-    private float attackCooldownTimer;
-
-    private enum PlayerState { Idle, Run, Jump, Fall, Attack, Dash, Hurt }
-    private PlayerState currentState = PlayerState.Idle;
+    private float hurtTimer;
+    private float hurtInvincibleTimer;
 
     void Start()
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (animator == null) animator = GetComponent<Animator>();
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+
+        InitDefaultComboData();
+    }
+
+    /// <summary>
+    /// 如果没有配置数据，填充默认连招
+    /// </summary>
+    void InitDefaultComboData()
+    {
+        if (groundCombo == null || groundCombo.Length == 0)
+        {
+            groundCombo = new AttackData[3];
+            for (int i = 0; i < groundCombo.Length; i++)
+                groundCombo[i] = new AttackData();
+        }
+
+        if (airCombo == null || airCombo.Length == 0)
+        {
+            airCombo = new AttackData[2];
+            for (int i = 0; i < airCombo.Length; i++)
+                airCombo[i] = new AttackData();
+        }
+
+        if (airSlam == null)
+            airSlam = new AttackData();
     }
 
     void Update()
@@ -74,25 +117,27 @@ public class PlayerController : MonoBehaviour
     {
         if (isDashing) return;
 
-        Move();
         CheckGround();
+
+        if (attackPhase != AttackPhase.Startup && attackPhase != AttackPhase.Active)
+            Move();
+
+        if (attackPhase == AttackPhase.Active)
+            PerformAttackHit();
     }
 
-    /// <summary>
-    /// 收集玩家输入（后续可替换为 Unity Input System）
-    /// </summary>
     void GatherInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         jumpInput = Input.GetButtonDown("Jump");
         attackInput = Input.GetButtonDown("Fire1");
+        slamInput = Input.GetButtonDown("Fire2");
         dashInput = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift);
     }
 
     void HandleCooldowns()
     {
         if (dashCooldownTimer > 0) dashCooldownTimer -= Time.deltaTime;
-        if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
 
         if (isDashing)
         {
@@ -100,19 +145,20 @@ public class PlayerController : MonoBehaviour
             if (dashTimer <= 0) EndDash();
         }
 
-        if (isAttacking)
+        if (isHurt)
         {
-            attackTimer -= Time.deltaTime;
-            if (attackTimer <= 0) EndAttack();
+            hurtTimer -= Time.deltaTime;
+            if (hurtTimer <= 0) EndHurt();
         }
+
+        HandleAttackPhase();
     }
 
     void HandleState()
     {
-        if (currentState == PlayerState.Hurt) return;
-
+        if (isHurt) { currentState = PlayerState.Hurt; return; }
         if (isDashing) { currentState = PlayerState.Dash; return; }
-        if (isAttacking) { currentState = PlayerState.Attack; return; }
+        if (attackPhase != AttackPhase.None) { currentState = PlayerState.Attack; return; }
 
         if (!isGrounded)
             currentState = rb.velocity.y > 0 ? PlayerState.Jump : PlayerState.Fall;
@@ -122,15 +168,15 @@ public class PlayerController : MonoBehaviour
             currentState = PlayerState.Idle;
 
         if (jumpInput && isGrounded) Jump();
-        if (attackInput && attackCooldownTimer <= 0 && !isAttacking) StartAttack();
-        if (dashInput && dashCooldownTimer <= 0 && !isDashing && isGrounded) StartDash();
+        if (attackInput) TryStartAttack();
+        if (slamInput && !isGrounded) TryStartAirSlam();
+        if (dashInput && dashCooldownTimer <= 0 && isGrounded) StartDash();
     }
 
     void Move()
     {
-        if (isAttacking) return; // 攻击时不能移动，可调整
-
-        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+        float speed = isGrounded ? moveSpeed : moveSpeed * airControlFactor;
+        rb.velocity = new Vector2(horizontalInput * speed, rb.velocity.y);
 
         if (horizontalInput > 0 && !isFacingRight) Flip();
         else if (horizontalInput < 0 && isFacingRight) Flip();
@@ -154,49 +200,157 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
-    void StartAttack()
+    #region 连招系统
+
+    void TryStartAttack()
     {
-        isAttacking = true;
-        attackTimer = attackDuration;
-        attackCooldownTimer = attackCooldown;
-        currentState = PlayerState.Attack;
+        if (attackPhase != AttackPhase.None)
+        {
+            // 在输入缓冲窗口内预输入下一段
+            if (CanBufferInput())
+                inputBuffered = true;
+            return;
+        }
+
+        currentComboIndex = 0;
+        hasHit = false;
+        StartAttackPhase(GetCurrentAttackData());
+    }
+
+    void TryStartAirSlam()
+    {
+        if (attackPhase != AttackPhase.None) return;
+
+        currentComboIndex = -1; // -1 表示下劈
+        hasHit = false;
+        StartAttackPhase(airSlam);
+    }
+
+    AttackData GetCurrentAttackData()
+    {
+        if (currentComboIndex < 0)
+            return airSlam;
+
+        AttackData[] combo = isGrounded ? groundCombo : airCombo;
+        int index = Mathf.Clamp(currentComboIndex, 0, combo.Length - 1);
+        return combo[index];
+    }
+
+    void StartAttackPhase(AttackData data)
+    {
+        if (data == null) return;
+
+        if (!isGrounded && !data.usableInAir)
+            return;
+
+        attackPhase = AttackPhase.Startup;
+        phaseTimer = data.startupTime;
+
+        // 攻击瞬间短暂停顿移动
         rb.velocity = new Vector2(0, rb.velocity.y);
 
-        PerformAttackHit();
+        // 下劈直接向下加速
+        if (currentComboIndex < 0)
+            rb.velocity = new Vector2(0, -airSlamSpeed);
+    }
+
+    void HandleAttackPhase()
+    {
+        if (attackPhase == AttackPhase.None) return;
+
+        phaseTimer -= Time.deltaTime;
+        if (phaseTimer > 0) return;
+
+        AttackData data = GetCurrentAttackData();
+
+        switch (attackPhase)
+        {
+            case AttackPhase.Startup:
+                attackPhase = AttackPhase.Active;
+                phaseTimer = data.activeTime;
+                break;
+
+            case AttackPhase.Active:
+                attackPhase = AttackPhase.Recovery;
+                phaseTimer = data.recoveryTime;
+                hasHit = false;
+                break;
+
+            case AttackPhase.Recovery:
+                if (inputBuffered && CanContinueCombo())
+                {
+                    inputBuffered = false;
+                    currentComboIndex++;
+                    hasHit = false;
+                    StartAttackPhase(GetCurrentAttackData());
+                }
+                else
+                {
+                    EndAttack();
+                }
+                break;
+        }
+    }
+
+    bool CanBufferInput()
+    {
+        AttackData data = GetCurrentAttackData();
+        return attackPhase == AttackPhase.Recovery && phaseTimer <= data.inputBufferTime;
+    }
+
+    bool CanContinueCombo()
+    {
+        AttackData[] combo = isGrounded ? groundCombo : airCombo;
+        return currentComboIndex >= 0 && currentComboIndex < combo.Length - 1;
     }
 
     void PerformAttackHit()
     {
-        if (attackPoint == null) return;
+        AttackData data = GetCurrentAttackData();
+        Transform currentAttackPoint = currentComboIndex < 0 ? airSlamAttackPoint : attackPoint;
 
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
-        bool hasHit = false;
+        if (hasHit || currentAttackPoint == null) return;
+
+        float range = attackRange * data.rangeMultiplier;
+
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(currentAttackPoint.position, range, enemyLayer);
+        bool hitThisFrame = false;
 
         foreach (var enemy in enemies)
         {
             IDamageable damageable = enemy.GetComponent<IDamageable>();
             if (damageable != null && !damageable.IsInvincible)
             {
-                Vector2 knockback = new Vector2(isFacingRight ? 1f : -1f, 0.5f);
-                damageable.TakeDamage(attackDamage, knockback, transform.position);
-                hasHit = true;
+                Vector2 knockback = new Vector2(
+                    isFacingRight ? data.knockbackForce : -data.knockbackForce,
+                    data.knockbackUpForce
+                );
+                damageable.TakeDamage(data.damage, knockback, transform.position);
+                hitThisFrame = true;
             }
         }
 
-        if (hasHit)
+        if (hitThisFrame)
         {
-            HitStopManager.Instance?.TriggerHitStop(0.05f);
-            CameraShake.Instance?.Shake(0.08f, 0.08f);
+            hasHit = true;
+            HitStopManager.Instance?.TriggerHitStop(data.hitStopDuration);
+            CameraShake.Instance?.Shake(data.cameraShakeDuration, data.cameraShakeMagnitude);
         }
     }
 
     void EndAttack()
     {
-        isAttacking = false;
+        attackPhase = AttackPhase.None;
+        currentComboIndex = 0;
+        inputBuffered = false;
+        hasHit = false;
     }
+
+    #endregion
 
     void StartDash()
     {
+        EndAttack();
         isDashing = true;
         dashTimer = dashDuration;
         dashCooldownTimer = dashCooldown;
@@ -214,6 +368,29 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(0, rb.velocity.y);
     }
 
+    public void TakeDamage(int damage, Vector2 knockback)
+    {
+        if (isDashing && isInvincibleDuringDash) return;
+
+        isHurt = true;
+        hurtTimer = 0.3f;
+        currentState = PlayerState.Hurt;
+        rb.velocity = knockback;
+        EndAttack();
+
+        if (spriteRenderer != null)
+            spriteRenderer.color = Color.red;
+
+        // TODO: 扣血、死亡逻辑
+    }
+
+    void EndHurt()
+    {
+        isHurt = false;
+        if (spriteRenderer != null)
+            spriteRenderer.color = Color.white;
+    }
+
     void UpdateAnimations()
     {
         if (animator == null) return;
@@ -221,17 +398,10 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
         animator.SetBool("IsGrounded", isGrounded);
         animator.SetFloat("VerticalVelocity", rb.velocity.y);
-        animator.SetBool("IsAttacking", isAttacking);
+        animator.SetBool("IsAttacking", attackPhase != AttackPhase.None);
+        animator.SetInteger("ComboIndex", currentComboIndex);
         animator.SetBool("IsDashing", isDashing);
-    }
-
-    public void TakeDamage(int damage, Vector2 knockback)
-    {
-        if (isDashing && isInvincibleDuringDash) return;
-
-        currentState = PlayerState.Hurt;
-        rb.velocity = knockback;
-        // TODO: 扣血、无敌帧、受伤动画
+        animator.SetBool("IsHurt", isHurt);
     }
 
     void OnDrawGizmosSelected()
@@ -245,7 +415,8 @@ public class PlayerController : MonoBehaviour
         if (attackPoint != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+            float range = attackRange;
+            Gizmos.DrawWireSphere(attackPoint.position, range);
         }
     }
 }
