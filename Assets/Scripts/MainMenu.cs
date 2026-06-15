@@ -9,9 +9,6 @@ public class MainMenu : MonoBehaviour
     [Header("关卡")]
     public string firstLevelName = "SampleScene";
 
-    [Header("设置面板")]
-    public GameObject settingsPanel;
-
     public void StartGame()
     {
         SceneManager.LoadScene(firstLevelName);
@@ -19,14 +16,12 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
-        if (settingsPanel != null)
-            settingsPanel.SetActive(true);
+        SettingsManager.Instance?.OpenSettings();
     }
 
     public void CloseSettings()
     {
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
+        SettingsManager.Instance?.CloseSettings();
     }
 
     public void QuitGame()
