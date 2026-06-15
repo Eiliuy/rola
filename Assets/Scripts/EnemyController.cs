@@ -41,6 +41,9 @@ public class EnemyController : MonoBehaviour, IDamageable
     public Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
 
+    [Header("死亡特效")]
+    public DeathEffect deathEffectPrefab;
+
     private EnemyState currentState = EnemyState.Patrol;
     private Vector2 startPosition;
     private int patrolDirection = 1;
@@ -310,6 +313,9 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         if (animator != null)
             animator.SetTrigger("Die");
+
+        if (deathEffectPrefab != null)
+            Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
 
         Destroy(gameObject, 1f);
     }
