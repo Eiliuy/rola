@@ -4,7 +4,7 @@ using UnityEngine;
 /// 玩家角色控制器（连招版）
 /// 包含：移动、跳跃、攻击连招、闪避、受伤、下劈
 /// </summary>
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     [Header("移动")]
     public float moveSpeed = 5f;
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
+    public PlayerStats stats;
 
     // 输入
     private float horizontalInput;
@@ -71,13 +72,13 @@ public class PlayerController : MonoBehaviour
     private float dashTimer;
     private float dashCooldownTimer;
     private float hurtTimer;
-    private float hurtInvincibleTimer;
 
     void Start()
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (animator == null) animator = GetComponent<Animator>();
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+        if (stats == null) stats = GetComponent<PlayerStats>();
 
         InitDefaultComboData();
     }
@@ -156,6 +157,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleState()
     {
+        if (stats != null && stats.IsDead) { currentState = PlayerState.Hurt; return; }
         if (isHurt) { currentState = PlayerState.Hurt; return; }
         if (isDashing) { currentState = PlayerState.Dash; return; }
         if (attackPhase != AttackPhase.None) { currentState = PlayerState.Attack; return; }
@@ -368,9 +370,11 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(0, rb.velocity.y);
     }
 
-    public void TakeDamage(int damage, Vector2 knockback)
+    public bool IsInvincible => isDashing && isInvincibleDuringDash || (stats != null && stats.IsInvincible);
+
+    public void TakeDamage(int damage, Vector2 knockback, Vector2 attackerPosition)
     {
-        if (isDashing && isInvincibleDuringDash) return;
+        if (IsInvincible) return;
 
         isHurt = true;
         hurtTimer = 0.3f;
@@ -378,16 +382,39 @@ public class PlayerController : MonoBehaviour
         rb.velocity = knockback;
         EndAttack();
 
+        stats?.TakeDamage(damage);
+
+        if (stats != null && stats.IsDead)
+        {
+            HandleDeath();
+            return;
+        }
+
         if (spriteRenderer != null)
             spriteRenderer.color = Color.red;
+    }
 
-        // TODO: 扣血、死亡逻辑
+    void HandleDeath()
+    {
+        // 简单处理：1 秒后重生
+        rb.velocity = Vector2.zero;
+        Invoke(nameof(Respawn), 1f);
+    }
+
+    void Respawn()
+    {
+        stats?.Respawn();
+        isHurt = false;
+        isDashing = false;
+        rb.gravityScale = 1;
+        if (spriteRenderer != null)
+            spriteRenderer.color = Color.white;
     }
 
     void EndHurt()
     {
         isHurt = false;
-        if (spriteRenderer != null)
+        if (spriteRenderer != null && (stats == null || !stats.IsInvincible))
             spriteRenderer.color = Color.white;
     }
 
@@ -402,6 +429,8 @@ public class PlayerController : MonoBehaviour
         animator.SetInteger("ComboIndex", currentComboIndex);
         animator.SetBool("IsDashing", isDashing);
         animator.SetBool("IsHurt", isHurt);
+        if (stats != null)
+            animator.SetBool("IsDead", stats.IsDead);
     }
 
     void OnDrawGizmosSelected()
