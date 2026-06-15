@@ -12,6 +12,7 @@ public class GameInitializer : MonoBehaviour
     {
         EnsureHitStopManager();
         EnsureAudioManager();
+        EnsureNarrationManager();
     }
 
     void EnsureHitStopManager()
@@ -29,6 +30,15 @@ public class GameInitializer : MonoBehaviour
         {
             GameObject go = new GameObject("AudioManager");
             go.AddComponent<AudioManager>();
+        }
+    }
+
+    void EnsureNarrationManager()
+    {
+        if (NarrationManager.Instance == null)
+        {
+            GameObject go = new GameObject("NarrationManager");
+            go.AddComponent<NarrationManager>();
         }
     }
 }
