@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public LayerMask enemyLayer;
     public SlashEffect slashEffectPrefab;
     public float slashScaleMultiplier = 1f;
+    public HitEffect hitEffectPrefab;
 
     [Header("地面连招")]
     public AttackData[] groundCombo = new AttackData[3];
@@ -320,6 +321,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         Collider2D[] enemies = Physics2D.OverlapCircleAll(currentAttackPoint.position, range, enemyLayer);
         bool hitThisFrame = false;
+        Vector3 hitPosition = currentAttackPoint.position;
 
         foreach (var enemy in enemies)
         {
@@ -332,15 +334,23 @@ public class PlayerController : MonoBehaviour, IDamageable
                 );
                 damageable.TakeDamage(data.damage, knockback, transform.position);
                 hitThisFrame = true;
+                hitPosition = enemy.transform.position;
             }
         }
 
         if (hitThisFrame)
         {
             hasHit = true;
+            SpawnHitEffect(hitPosition);
             HitStopManager.Instance?.TriggerHitStop(data.hitStopDuration);
             CameraShake.Instance?.Shake(data.cameraShakeDuration, data.cameraShakeMagnitude);
         }
+    }
+
+    void SpawnHitEffect(Vector3 position)
+    {
+        if (hitEffectPrefab == null) return;
+        Instantiate(hitEffectPrefab, position, Quaternion.identity);
     }
 
     void SpawnSlashEffect()
