@@ -198,6 +198,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        AudioManager.Instance?.PlayJumpSound(transform.position);
     }
 
     void CheckGround()
@@ -369,6 +370,10 @@ public class PlayerController : MonoBehaviour, IDamageable
             effect.transform.Rotate(0, 0, -90f);
 
         effect.Setup(isFacingRight, slashScaleMultiplier);
+
+        // 播放攻击音效，下劈用第一段音效
+        int soundIndex = currentComboIndex < 0 ? 0 : currentComboIndex;
+        AudioManager.Instance?.PlayAttackSound(soundIndex, transform.position);
     }
 
     void EndAttack()
@@ -392,6 +397,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         float dashDir = isFacingRight ? 1f : -1f;
         rb.velocity = new Vector2(dashDir * dashSpeed, 0);
         rb.gravityScale = 0;
+
+        AudioManager.Instance?.PlayDashSound(transform.position);
     }
 
     void EndDash()
@@ -413,6 +420,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         rb.velocity = knockback;
         EndAttack();
 
+        AudioManager.Instance?.PlayHurtSound(transform.position);
         stats?.TakeDamage(damage);
 
         if (stats != null && stats.IsDead)

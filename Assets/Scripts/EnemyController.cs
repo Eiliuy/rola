@@ -264,6 +264,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
 
         hasHit = true;
+        AudioManager.Instance?.PlayEnemyAttackSound(transform.position);
     }
 
     public void TakeDamage(int damage, Vector2 knockback, Vector2 attackerPosition)
@@ -276,6 +277,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         // 打击反馈
         HitStopManager.Instance?.TriggerHitStop(attackData.hitStopDuration);
+        AudioManager.Instance?.PlayEnemyHurtSound(transform.position);
         CameraShake.Instance?.Shake(0.1f, 0.1f);
 
         if (currentHP <= 0)
@@ -313,6 +315,8 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         if (animator != null)
             animator.SetTrigger("Die");
+
+        AudioManager.Instance?.PlayEnemyDeathSound(transform.position);
 
         if (deathEffectPrefab != null)
             Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
