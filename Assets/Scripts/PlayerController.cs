@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     public Transform airSlamAttackPoint;
     public float attackRange = 1f;
     public LayerMask enemyLayer;
+    public SlashEffect slashEffectPrefab;
+    public float slashScaleMultiplier = 1f;
 
     [Header("地面连招")]
     public AttackData[] groundCombo = new AttackData[3];
@@ -270,6 +272,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             case AttackPhase.Startup:
                 attackPhase = AttackPhase.Active;
                 phaseTimer = data.activeTime;
+                SpawnSlashEffect();
                 break;
 
             case AttackPhase.Active:
@@ -338,6 +341,24 @@ public class PlayerController : MonoBehaviour, IDamageable
             HitStopManager.Instance?.TriggerHitStop(data.hitStopDuration);
             CameraShake.Instance?.Shake(data.cameraShakeDuration, data.cameraShakeMagnitude);
         }
+    }
+
+    void SpawnSlashEffect()
+    {
+        if (slashEffectPrefab == null) return;
+
+        Transform currentAttackPoint = currentComboIndex < 0 ? airSlamAttackPoint : attackPoint;
+        if (currentAttackPoint == null) return;
+
+        Vector3 spawnPos = currentAttackPoint.position;
+        Quaternion rot = Quaternion.identity;
+        SlashEffect effect = Instantiate(slashEffectPrefab, spawnPos, rot, transform);
+
+        // 下劈时旋转刀光朝下
+        if (currentComboIndex < 0)
+            effect.transform.Rotate(0, 0, -90f);
+
+        effect.Setup(isFacingRight, slashScaleMultiplier);
     }
 
     void EndAttack()
