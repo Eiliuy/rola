@@ -12,6 +12,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     public int maxHP = 30;
     public int currentHP;
 
+    public System.Action<int, int> OnHPChanged;
+
     [Header("检测")]
     public float sightRange = 6f;
     public float attackRange = 1.2f;
@@ -266,6 +268,8 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (IsInvincible) return;
 
         currentHP -= damage;
+        currentHP = Mathf.Max(0, currentHP);
+        OnHPChanged?.Invoke(currentHP, maxHP);
 
         // 打击反馈
         HitStopManager.Instance?.TriggerHitStop(attackData.hitStopDuration);
