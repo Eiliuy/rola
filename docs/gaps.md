@@ -61,6 +61,14 @@
 - [ ] 配音录制/合成
 - [ ] 音频混音与动态音量
 
+## AI 辅助工具链
+
+- [ ] 在个人 PC 安装 Unity 2022.3 LTS
+- [ ] 在 PC 激活 Unity Personal 许可证
+- [ ] 安装并配置 Funplay Unity MCP
+- [ ] 在 OpenCode 中配置 MCP 服务器指向本地 Unity Editor
+- [ ] 验证 OpenCode 可通过 MCP 操作 Unity（读取场景、创建资产、进入 Play Mode）
+
 ## 测试与质量
 
 - [ ] Unity Test Framework 自动化测试（属性计算、Build 组装、装备效果、升级生成）

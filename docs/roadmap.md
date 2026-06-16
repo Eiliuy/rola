@@ -1,6 +1,15 @@
 # Rola 后续迭代方向
 
-## 近期（Demo 完善）
+## 当前阶段：美术填充与职业内容落地
+
+### Unity / AI 工具链
+
+- 在个人 PC 安装 Unity 2022.3 LTS
+- 激活 Unity Personal 许可证
+- 导入 Rola 项目并配置版本
+- 安装 Funplay Unity MCP package
+- 配置 OpenCode MCP 连接到本地 Unity Editor
+- 验证 OpenCode 可通过 MCP 读取场景、创建资产、进入 Play Mode
 
 ### 美术资源
 

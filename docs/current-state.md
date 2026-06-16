@@ -112,3 +112,26 @@
   - 攻击支持暴击和元素类型
   - 命中/击杀/闪避/受击事件转发给装备特效
   - PlayerStats 血量上限随 Build 变化动态同步
+
+## 视觉系统模块化（新增）
+
+- 角色外观模块化
+  - CharacterPartSlot：定义 Hair / Body / Top / Bottom / Gloves / Shoes / Weapon / Accessory 等部位
+  - CharacterPartData：单个部位 Sprite 与排序配置
+  - CharacterAppearanceData：组合完整外观
+  - CharacterAppearanceRenderer：按部位层级批量渲染 Sprite
+  - PlayerVisualController：统一控制动画与外观切换
+  - PlayerAnimationController：Animator 参数唯一封装
+- 旧视觉逻辑清理
+  - 移除 PlayerController 中直接操作 animator / spriteRenderer 的代码
+  - 所有视觉表现统一走 PlayerVisualController
+  - 玩家预制体结构改为根对象逻辑 + VisualRoot 渲染子物体
+- 编辑器辅助
+  - PlaceholderSpriteGenerator：一键生成按部位分色的占位 Sprite
+  - SwordsmanClassGenerator：自动生成剑士职业相关的 ScriptableObject 资产
+
+## AI 辅助工具链
+
+- 已调研并选定 Funplay Unity MCP 作为 OpenCode 与 Unity Editor 的桥接方案
+- 服务器端已下载 Unity 2022.3.50f1 Linux Editor，但因该主机无 GPU/显示输出，未继续安装激活
+- 计划在个人 PC（带 GPU/显示器）上完成 Unity + Funplay MCP 的安装与配置，之后通过 OpenCode 远程驱动 Editor 操作
