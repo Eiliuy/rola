@@ -18,15 +18,63 @@ public class PlayerStats : MonoBehaviour
     public bool IsDead => currentHP <= 0;
     public bool IsInvincible { get; private set; }
 
+    public PlayerBuild CurrentBuild => RunManager.Instance?.CurrentRun?.playerBuild;
+
+    private PlayerBuild subscribedBuild;
+
     public System.Action<int, int> OnHPChanged;
     public System.Action OnPlayerDied;
     public System.Action OnPlayerRespawned;
 
     void Start()
     {
-        currentHP = maxHP;
+        SubscribeToBuild(CurrentBuild);
+
+        if (CurrentBuild == null)
+            currentHP = maxHP;
+
         respawnPosition = transform.position;
         IsInvincible = false;
+    }
+
+    void OnDestroy()
+    {
+        SubscribeToBuild(null);
+    }
+
+    public void SubscribeToBuild(PlayerBuild build)
+    {
+        if (subscribedBuild != null)
+            subscribedBuild.OnStatsChanged -= OnBuildStatsChanged;
+        subscribedBuild = build;
+        if (subscribedBuild != null)
+        {
+            subscribedBuild.OnStatsChanged += OnBuildStatsChanged;
+            OnBuildStatsChanged();
+        }
+    }
+
+    void OnBuildStatsChanged()
+    {
+        if (subscribedBuild == null) return;
+
+        int oldMaxHP = maxHP;
+        maxHP = subscribedBuild.CharacterStats.MaxHP;
+
+        if (oldMaxHP <= 0)
+        {
+            currentHP = maxHP;
+        }
+        else if (maxHP > oldMaxHP)
+        {
+            currentHP = Mathf.RoundToInt(currentHP * ((float)maxHP / oldMaxHP));
+        }
+        else
+        {
+            currentHP = Mathf.Min(currentHP, maxHP);
+        }
+
+        OnHPChanged?.Invoke(currentHP, maxHP);
     }
 
     public void TakeDamage(int damage)
@@ -36,6 +84,8 @@ public class PlayerStats : MonoBehaviour
         currentHP -= damage;
         currentHP = Mathf.Max(0, currentHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
+        CurrentBuild?.TriggerOnDamaged(damage, Vector2.zero);
+        CurrentBuild?.TriggerOnHPChanged(currentHP, maxHP);
 
         if (currentHP <= 0)
             Die();
@@ -49,6 +99,7 @@ public class PlayerStats : MonoBehaviour
 
         currentHP = Mathf.Min(maxHP, currentHP + amount);
         OnHPChanged?.Invoke(currentHP, maxHP);
+        CurrentBuild?.TriggerOnHPChanged(currentHP, maxHP);
     }
 
     void Die()
@@ -59,10 +110,14 @@ public class PlayerStats : MonoBehaviour
 
     public void Respawn()
     {
+        if (subscribedBuild != null)
+            maxHP = subscribedBuild.CharacterStats.MaxHP;
+
         currentHP = maxHP;
         IsInvincible = false;
         transform.position = respawnPosition;
         OnHPChanged?.Invoke(currentHP, maxHP);
+        CurrentBuild?.TriggerOnHPChanged(currentHP, maxHP);
         OnPlayerRespawned?.Invoke();
     }
 

@@ -7,6 +7,11 @@ public class GameInitializer : MonoBehaviour
 {
     [Header("管理器预制体")]
     public GameObject hitStopManagerPrefab;
+    public GameObject audioManagerPrefab;
+    public GameObject narrationManagerPrefab;
+    public GameObject settingsManagerPrefab;
+    public GameObject runManagerPrefab;
+    public GameObject upgradeManagerPrefab;
 
     void Awake()
     {
@@ -14,14 +19,23 @@ public class GameInitializer : MonoBehaviour
         EnsureAudioManager();
         EnsureNarrationManager();
         EnsureSettingsManager();
+        EnsureRunManager();
+        EnsureUpgradeManager();
     }
 
     void EnsureHitStopManager()
     {
         if (HitStopManager.Instance == null)
         {
-            GameObject go = new GameObject("HitStopManager");
-            go.AddComponent<HitStopManager>();
+            if (hitStopManagerPrefab != null)
+            {
+                Instantiate(hitStopManagerPrefab);
+            }
+            else
+            {
+                GameObject go = new GameObject("HitStopManager");
+                go.AddComponent<HitStopManager>();
+            }
         }
     }
 
@@ -29,8 +43,15 @@ public class GameInitializer : MonoBehaviour
     {
         if (AudioManager.Instance == null)
         {
-            GameObject go = new GameObject("AudioManager");
-            go.AddComponent<AudioManager>();
+            if (audioManagerPrefab != null)
+            {
+                Instantiate(audioManagerPrefab);
+            }
+            else
+            {
+                GameObject go = new GameObject("AudioManager");
+                go.AddComponent<AudioManager>();
+            }
         }
     }
 
@@ -38,8 +59,15 @@ public class GameInitializer : MonoBehaviour
     {
         if (NarrationManager.Instance == null)
         {
-            GameObject go = new GameObject("NarrationManager");
-            go.AddComponent<NarrationManager>();
+            if (narrationManagerPrefab != null)
+            {
+                Instantiate(narrationManagerPrefab);
+            }
+            else
+            {
+                GameObject go = new GameObject("NarrationManager");
+                go.AddComponent<NarrationManager>();
+            }
         }
     }
 
@@ -47,8 +75,47 @@ public class GameInitializer : MonoBehaviour
     {
         if (SettingsManager.Instance == null)
         {
-            GameObject go = new GameObject("SettingsManager");
-            go.AddComponent<SettingsManager>();
+            if (settingsManagerPrefab != null)
+            {
+                Instantiate(settingsManagerPrefab);
+            }
+            else
+            {
+                GameObject go = new GameObject("SettingsManager");
+                go.AddComponent<SettingsManager>();
+            }
+        }
+    }
+
+    void EnsureRunManager()
+    {
+        if (RunManager.Instance == null)
+        {
+            if (runManagerPrefab != null)
+            {
+                Instantiate(runManagerPrefab);
+            }
+            else
+            {
+                GameObject go = new GameObject("RunManager");
+                go.AddComponent<RunManager>();
+            }
+        }
+    }
+
+    void EnsureUpgradeManager()
+    {
+        if (UpgradeManager.Instance == null)
+        {
+            if (upgradeManagerPrefab != null)
+            {
+                Instantiate(upgradeManagerPrefab);
+            }
+            else
+            {
+                GameObject go = new GameObject("UpgradeManager");
+                go.AddComponent<UpgradeManager>();
+            }
         }
     }
 }

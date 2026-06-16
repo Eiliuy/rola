@@ -12,6 +12,18 @@ public class AttackData
     [Tooltip("伤害值")]
     public int damage = 10;
 
+    [Tooltip("伤害倍率，用于技能和装备影响")]
+    public float damageMultiplier = 1f;
+
+    [Tooltip("元素类型")]
+    public ElementType elementType = ElementType.None;
+
+    [Tooltip("是否可暴击")]
+    public bool canCrit = true;
+
+    [Tooltip("覆盖暴击率，-1 表示使用 Build 默认值")]
+    public float critChanceOverride = -1f;
+
     [Tooltip("前摇时间：出手前无法命中")]
     public float startupTime = 0.1f;
 
