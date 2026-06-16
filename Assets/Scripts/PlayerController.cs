@@ -56,13 +56,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private SkillCooldown skillCooldown = new SkillCooldown();
 
-    /// <summary>
-    /// 当前玩家 Build
-    /// </summary>
-    public PlayerBuild CurrentBuild => RunManager.Instance?.CurrentRun?.playerBuild;
-
-    private SkillCooldown skillCooldown = new SkillCooldown();
-
     // 输入
     private float horizontalInput;
     private bool jumpInput;
@@ -112,13 +105,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 stats.SubscribeToBuild(CurrentBuild);
             if (visualController != null)
                 visualController.ApplyCurrentAppearance();
-        }
-
-        if (RunManager.Instance != null && !RunManager.Instance.CurrentRun.isRunActive)
-        {
-            RunManager.Instance.StartNewRun(RunManager.Instance.defaultClass);
-            if (stats != null)
-                stats.SubscribeToBuild(CurrentBuild);
         }
 
         InitDefaultComboData();
