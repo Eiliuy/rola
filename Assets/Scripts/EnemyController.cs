@@ -321,6 +321,9 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (deathEffectPrefab != null)
             Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
 
+        RunManager.Instance?.AddExp(10);
+        RunManager.Instance?.AddGold(Random.Range(1, 4));
+
         Destroy(gameObject, 1f);
     }
 

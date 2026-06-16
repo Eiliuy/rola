@@ -85,3 +85,30 @@
 ## 全局管理器
 
 - GameInitializer：自动创建所有单例管理器
+
+## 肉鸽系统框架（新增）
+
+- 数据资产
+  - 职业数据（PlayerClassData）
+  - 技能数据（SkillData）
+  - 装备数据（EquipmentData）
+  - 升级奖励数据（UpgradeData）
+- 运行时属性系统
+  - CharacterStats：基础属性 + 修改器计算最终属性
+  - StatModifier：支持加值 / 百分比 / 最终乘区
+  - PlayerBuild：汇总职业、技能、装备、升级
+  - SkillCooldown：技能冷却管理
+- 单局流程
+  - RunManager / RunData：管理本局职业、Build、进度、金币、经验
+  - UpgradeManager：升级奖励三选一
+- 装备特效系统
+  - IEquipmentEffect 接口
+  - 命中特效（点燃/流血/眩晕）
+  - 闪避特效（回血/短暂无敌）
+  - 低血量特效（护盾/回血）
+  - 击杀特效（回血/金币/临时攻速）
+- 玩家系统接入
+  - PlayerController 从 Build 读取移速、跳跃力、攻速、攻击范围、伤害
+  - 攻击支持暴击和元素类型
+  - 命中/击杀/闪避/受击事件转发给装备特效
+  - PlayerStats 血量上限随 Build 变化动态同步
