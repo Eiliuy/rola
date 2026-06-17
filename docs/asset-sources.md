@@ -65,6 +65,41 @@
 
 ## 已下载素材
 
-| 文件名 | 来源 URL | 许可证 | 用途 | 下载时间 |
-|---|---|---|---|---|
-| （空） |  |  |  |  |
+### Kenney.nl（已批量下载）
+
+- **下载时间**：2026-06-17
+- **总包数**：207
+- **总大小**：约 433 MB
+- **许可证**：CC0
+- **本地路径**：`tools/asset-crawlers/downloads/kenney/`
+- **清单文件**：`tools/asset-crawlers/downloads/manifest.json`
+
+按标题关键词分类：
+
+| 类别 | 数量 |
+|---|---|
+| Platformer | 27 |
+| Tile / Environment | 24 |
+| Vehicle / Combat | 19 |
+| UI / Icon / Font | 19 |
+| Roguelike / RPG | 16 |
+| Character | 16 |
+| Audio | 10 |
+| VFX | 3 |
+
+Rola 战斗原型可优先使用的包：
+
+| 包名 | 用途 |
+|---|---|
+| Platformer Kit | 横版平台场景元件 |
+| Platformer Pack Remastered | 高清平台/敌人/收集物 |
+| Platformer Characters | 玩家/敌人角色 Sprite |
+| Modular Characters | 可拼装角色部件 |
+| Roguelike Characters | 像素风角色 |
+| Monster Builder Pack | 敌人组合部件 |
+| Particle Pack | 通用粒子特效 |
+| Smoke Particles | 烟雾/受击特效 |
+| UI Pack / UI Pack (RPG Expansion) / Pixel UI Pack | 游戏 UI |
+| UI Audio / Digital Audio / RPG Audio | 音效与 BGM |
+
+（完整 207 条记录见 manifest.json）
