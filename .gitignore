@@ -69,6 +69,11 @@ crashlytics-build.properties
 .funplay/
 .claude/settings.local.json
 
+# Asset crawler downloads (large raw assets, keep manifest only if needed)
+tools/asset-crawlers/downloads/
+tools/asset-crawlers/__pycache__/
+tools/asset-crawlers/asset_crawlers/__pycache__/
+
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 

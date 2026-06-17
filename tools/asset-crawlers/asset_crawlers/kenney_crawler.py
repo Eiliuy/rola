@@ -31,28 +31,35 @@ class KenneyCrawler(BaseCrawler):
         page = 1
 
         while page <= max_pages:
-            url = f"{self.BASE_URL}?page={page}"
+            url = f"{self.BASE_URL}/page:{page}"
             print(f"[FETCH] {url}")
-            resp = self.session.get(url, timeout=30)
-            resp.raise_for_status()
+            try:
+                resp = self.session.get(url, timeout=30)
+                resp.raise_for_status()
+            except Exception as e:
+                print(f"  [END] Failed to fetch page {page}: {e}")
+                break
 
             soup = BeautifulSoup(resp.text, "html.parser")
-            cards = soup.select(".asset-card, .pack, article")
-
-            # Kenney 实际页面结构：每个 pack 是一个 a 链接
-            links = soup.find_all("a", href=re.compile(r"/assets/[^/]+"))
+            cards = soup.select("div.asset")
             found_on_page = 0
-            for link in links:
-                href = link.get("href", "")
-                if not href or href == "/assets":
+            for card in cards:
+                # 找素材包链接（排除 category/tag/series）
+                link = card.find("a", href=re.compile(r"^https://kenney\.nl/assets/[a-z0-9\-]+$"))
+                if not link:
                     continue
-                pack_url = urljoin(self.BASE_URL, href)
-                title_tag = link.find("h3") or link.find("h2") or link
-                title = title_tag.get_text(strip=True)
 
-                if not any(p["url"] == pack_url for p in packs):
-                    packs.append({"title": title, "url": pack_url})
-                    found_on_page += 1
+                pack_url = link.get("href")
+                if any(p["url"] == pack_url for p in packs):
+                    continue
+
+                title_tag = card.find("h2")
+                title = title_tag.get_text(strip=True) if title_tag else ""
+                if not title:
+                    continue
+
+                packs.append({"title": title, "url": pack_url})
+                found_on_page += 1
 
             if found_on_page == 0:
                 break

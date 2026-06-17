@@ -47,7 +47,7 @@ class BaseCrawler(ABC):
     """素材爬虫基类"""
 
     def __init__(self, output_dir: Optional[Path] = None, delay: float = DEFAULT_DELAY):
-        self.output_dir = Path(output_dir) if output_dir else DOWNLOAD_ROOT / self.site_name
+        self.output_dir = Path(output_dir).resolve() if output_dir else DOWNLOAD_ROOT / self.site_name
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.delay = delay
         self.session = requests.Session()
@@ -105,6 +105,10 @@ class BaseCrawler(ABC):
         if not filename:
             filename = Path(urlparse(url).path).name or "unnamed"
         file_path = save_dir / filename
+
+        if file_path.exists() and file_path.stat().st_size > 0:
+            print(f"[SKIP] File already exists: {file_path}")
+            return file_path
 
         try:
             resp = self.session.get(url, stream=True, timeout=60)
