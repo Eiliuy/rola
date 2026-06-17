@@ -30,13 +30,11 @@ class ItchCrawler(BaseCrawler):
         page = 1
 
         while page <= max_pages:
+            url = f"{self.BASE_URL}/tag-{tag}" if tag else self.BASE_URL
             params = {"page": page}
             if query:
                 params["q"] = query
-            if tag:
-                params["tag"] = tag
-
-            url = f"{self.BASE_URL}/{tag}" if tag else self.BASE_URL
+            # tag 已在 URL 路径中，无需再放入 params
             print(f"[FETCH] {url} page {page}")
             resp = self.session.get(url, params=params, timeout=30)
             resp.raise_for_status()
@@ -73,7 +71,9 @@ class ItchCrawler(BaseCrawler):
         for selector in [".download_btn", "a[href*='/download']"]:
             tag = soup.select_one(selector)
             if tag:
-                return urljoin(asset_url, tag.get("href", ""))
+                href = tag.get("href", "")
+                if href and not href.startswith("javascript:"):
+                    return urljoin(asset_url, href)
 
         return ""
 
