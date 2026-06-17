@@ -80,3 +80,7 @@ tools/asset-crawlers/asset_crawlers/__pycache__/
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Kenney raw zip downloads (already organized under Assets)
+tools/asset-crawlers/downloads/kenney/
+tools/asset-crawlers/_unpack_temp/

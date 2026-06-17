@@ -1,0 +1,1068 @@
+{
+  "organized_at": "2026-06-17T13:26:31.186159+00:00",
+  "total_packs": 207,
+  "stats": {
+    "sprites": {
+      "image": 38492
+    },
+    "tilesets": {
+      "image": 14217
+    },
+    "models": {
+      ".obj": 4602,
+      ".mtl": 4602,
+      ".gltf": 302,
+      ".fbx": 4312,
+      ".glb": 4300,
+      ".dae": 734,
+      ".stl": 734
+    },
+    "ui": {
+      "image": 8107
+    },
+    "audio": {
+      "sfx": 742,
+      "music": 86
+    },
+    "effects": {
+      "image": 272
+    }
+  },
+  "summary": [
+    {
+      "pack": "1-Bit_Pack",
+      "category": "sprites",
+      "files_copied": 24
+    },
+    {
+      "pack": "1-Bit_Platformer_Pack",
+      "category": "tilesets",
+      "files_copied": 811
+    },
+    {
+      "pack": "3D_Road_Tiles",
+      "category": "tilesets",
+      "files_copied": 915
+    },
+    {
+      "pack": "Abstract_Platformer",
+      "category": "tilesets",
+      "files_copied": 401
+    },
+    {
+      "pack": "Alien_UFO_Pack",
+      "category": "sprites",
+      "files_copied": 57
+    },
+    {
+      "pack": "Animal_Pack",
+      "category": "sprites",
+      "files_copied": 124
+    },
+    {
+      "pack": "Animal_Pack_Remastered",
+      "category": "sprites",
+      "files_copied": 284
+    },
+    {
+      "pack": "Animated_Characters_Protagonists",
+      "category": "sprites",
+      "files_copied": 16
+    },
+    {
+      "pack": "Animated_Characters_Retro",
+      "category": "sprites",
+      "files_copied": 12
+    },
+    {
+      "pack": "Animated_Characters_Survivors",
+      "category": "sprites",
+      "files_copied": 17
+    },
+    {
+      "pack": "Background_Elements",
+      "category": "tilesets",
+      "files_copied": 135
+    },
+    {
+      "pack": "Background_Elements_Remastered",
+      "category": "tilesets",
+      "files_copied": 171
+    },
+    {
+      "pack": "Blaster_Kit",
+      "category": "sprites",
+      "files_copied": 211
+    },
+    {
+      "pack": "Block_Pack",
+      "category": "sprites",
+      "files_copied": 213
+    },
+    {
+      "pack": "Blocky_Characters",
+      "category": "sprites",
+      "files_copied": 150
+    },
+    {
+      "pack": "Board_Game_Icons",
+      "category": "ui",
+      "files_copied": 774
+    },
+    {
+      "pack": "Board_Game_Info",
+      "category": "sprites",
+      "files_copied": 868
+    },
+    {
+      "pack": "Board_Game_Pack",
+      "category": "sprites",
+      "files_copied": 583
+    },
+    {
+      "pack": "Brick_Kit",
+      "category": "sprites",
+      "files_copied": 1490
+    },
+    {
+      "pack": "Brick_Pack",
+      "category": "sprites",
+      "files_copied": 554
+    },
+    {
+      "pack": "Building_Kit",
+      "category": "sprites",
+      "files_copied": 407
+    },
+    {
+      "pack": "Car_Kit",
+      "category": "sprites",
+      "files_copied": 259
+    },
+    {
+      "pack": "Cartography_Pack",
+      "category": "sprites",
+      "files_copied": 182
+    },
+    {
+      "pack": "Casino_Audio",
+      "category": "audio",
+      "files_copied": 58
+    },
+    {
+      "pack": "Castle_Kit",
+      "category": "sprites",
+      "files_copied": 397
+    },
+    {
+      "pack": "City_Kit_Commercial",
+      "category": "sprites",
+      "files_copied": 219
+    },
+    {
+      "pack": "City_Kit_Industrial",
+      "category": "sprites",
+      "files_copied": 141
+    },
+    {
+      "pack": "City_Kit_Roads",
+      "category": "sprites",
+      "files_copied": 372
+    },
+    {
+      "pack": "City_Kit_Suburban",
+      "category": "sprites",
+      "files_copied": 216
+    },
+    {
+      "pack": "Coaster_Kit",
+      "category": "sprites",
+      "files_copied": 930
+    },
+    {
+      "pack": "Construct_Game_Sources",
+      "category": "sprites",
+      "files_copied": 15
+    },
+    {
+      "pack": "Crosshair_Pack",
+      "category": "ui",
+      "files_copied": 1211
+    },
+    {
+      "pack": "Cube_Pets",
+      "category": "sprites",
+      "files_copied": 129
+    },
+    {
+      "pack": "Cursor_Pack",
+      "category": "sprites",
+      "files_copied": 1096
+    },
+    {
+      "pack": "Cursor_Pixel_Pack",
+      "category": "sprites",
+      "files_copied": 227
+    },
+    {
+      "pack": "Desert_Shooter_Pack",
+      "category": "sprites",
+      "files_copied": 565
+    },
+    {
+      "pack": "Development_Essentials",
+      "category": "sprites",
+      "files_copied": 22
+    },
+    {
+      "pack": "Digital_Audio",
+      "category": "audio",
+      "files_copied": 67
+    },
+    {
+      "pack": "Emotes_Pack",
+      "category": "ui",
+      "files_copied": 534
+    },
+    {
+      "pack": "Factory_Kit",
+      "category": "sprites",
+      "files_copied": 727
+    },
+    {
+      "pack": "Fantasy_Town_Kit",
+      "category": "sprites",
+      "files_copied": 847
+    },
+    {
+      "pack": "Fantasy_UI_Borders",
+      "category": "ui",
+      "files_copied": 286
+    },
+    {
+      "pack": "Fish_Pack",
+      "category": "sprites",
+      "files_copied": 387
+    },
+    {
+      "pack": "Flag_Pack",
+      "category": "sprites",
+      "files_copied": 700
+    },
+    {
+      "pack": "Foliage_Pack",
+      "category": "sprites",
+      "files_copied": 230
+    },
+    {
+      "pack": "Foliage_Sprites",
+      "category": "sprites",
+      "files_copied": 107
+    },
+    {
+      "pack": "Food_Kit",
+      "category": "sprites",
+      "files_copied": 1009
+    },
+    {
+      "pack": "Furniture_Kit",
+      "category": "sprites",
+      "files_copied": 1546
+    },
+    {
+      "pack": "Game_Icons",
+      "category": "ui",
+      "files_copied": 434
+    },
+    {
+      "pack": "Game_Icons_Expansion",
+      "category": "ui",
+      "files_copied": 810
+    },
+    {
+      "pack": "Generic_Items",
+      "category": "sprites",
+      "files_copied": 339
+    },
+    {
+      "pack": "Googly_Eyes",
+      "category": "sprites",
+      "files_copied": 12
+    },
+    {
+      "pack": "Graveyard_Kit",
+      "category": "tilesets",
+      "files_copied": 465
+    },
+    {
+      "pack": "Hexagon_Buildings",
+      "category": "tilesets",
+      "files_copied": 91
+    },
+    {
+      "pack": "Hexagon_Kit",
+      "category": "tilesets",
+      "files_copied": 374
+    },
+    {
+      "pack": "Hexagon_Pack",
+      "category": "tilesets",
+      "files_copied": 330
+    },
+    {
+      "pack": "Hexagon_Tiles",
+      "category": "tilesets",
+      "files_copied": 110
+    },
+    {
+      "pack": "Holiday_Extras",
+      "category": "sprites",
+      "files_copied": 278
+    },
+    {
+      "pack": "Holiday_Kit",
+      "category": "sprites",
+      "files_copied": 509
+    },
+    {
+      "pack": "Impact_Sounds",
+      "category": "audio",
+      "files_copied": 133
+    },
+    {
+      "pack": "Input_Prompts",
+      "category": "sprites",
+      "files_copied": 4644
+    },
+    {
+      "pack": "Input_Prompts_Pixel",
+      "category": "sprites",
+      "files_copied": 823
+    },
+    {
+      "pack": "Input_Prompts_Pixel_1-Bit",
+      "category": "sprites",
+      "files_copied": 1641
+    },
+    {
+      "pack": "Interface_Sounds",
+      "category": "audio",
+      "files_copied": 103
+    },
+    {
+      "pack": "Isometric_Blocks",
+      "category": "tilesets",
+      "files_copied": 156
+    },
+    {
+      "pack": "Isometric_Miniature_Bases",
+      "category": "tilesets",
+      "files_copied": 329
+    },
+    {
+      "pack": "Isometric_Miniature_Dungeon",
+      "category": "tilesets",
+      "files_copied": 753
+    },
+    {
+      "pack": "Isometric_Miniature_Farm",
+      "category": "tilesets",
+      "files_copied": 463
+    },
+    {
+      "pack": "Isometric_Miniature_Library",
+      "category": "tilesets",
+      "files_copied": 297
+    },
+    {
+      "pack": "Isometric_Miniature_Prototype",
+      "category": "tilesets",
+      "files_copied": 657
+    },
+    {
+      "pack": "Isometric_Roads",
+      "category": "tilesets",
+      "files_copied": 101
+    },
+    {
+      "pack": "Isometric_Roads_Water",
+      "category": "tilesets",
+      "files_copied": 47
+    },
+    {
+      "pack": "Isometric_Tiles_Buildings",
+      "category": "tilesets",
+      "files_copied": 136
+    },
+    {
+      "pack": "Isometric_Tiles_City",
+      "category": "tilesets",
+      "files_copied": 147
+    },
+    {
+      "pack": "Isometric_Tiles_Landscape",
+      "category": "tilesets",
+      "files_copied": 134
+    },
+    {
+      "pack": "Isometric_Tiles_Vehicles",
+      "category": "tilesets",
+      "files_copied": 563
+    },
+    {
+      "pack": "Jumper_Pack",
+      "category": "sprites",
+      "files_copied": 133
+    },
+    {
+      "pack": "Kenney_Fonts",
+      "category": "ui",
+      "files_copied": 13
+    },
+    {
+      "pack": "Letter_Tiles",
+      "category": "tilesets",
+      "files_copied": 240
+    },
+    {
+      "pack": "Light_Masks",
+      "category": "sprites",
+      "files_copied": 460
+    },
+    {
+      "pack": "Map_Pack",
+      "category": "tilesets",
+      "files_copied": 198
+    },
+    {
+      "pack": "Marble_Kit",
+      "category": "sprites",
+      "files_copied": 826
+    },
+    {
+      "pack": "Medals",
+      "category": "ui",
+      "files_copied": 35
+    },
+    {
+      "pack": "Medieval_RTS",
+      "category": "sprites",
+      "files_copied": 270
+    },
+    {
+      "pack": "Micro_Roguelike",
+      "category": "sprites",
+      "files_copied": 332
+    },
+    {
+      "pack": "Mini_Arcade",
+      "category": "sprites",
+      "files_copied": 114
+    },
+    {
+      "pack": "Mini_Arena",
+      "category": "sprites",
+      "files_copied": 120
+    },
+    {
+      "pack": "Mini_Characters",
+      "category": "sprites",
+      "files_copied": 139
+    },
+    {
+      "pack": "Mini_Dungeon",
+      "category": "tilesets",
+      "files_copied": 137
+    },
+    {
+      "pack": "Mini_Market",
+      "category": "sprites",
+      "files_copied": 114
+    },
+    {
+      "pack": "Mini_Skate",
+      "category": "sprites",
+      "files_copied": 111
+    },
+    {
+      "pack": "Minigolf_Kit",
+      "category": "sprites",
+      "files_copied": 646
+    },
+    {
+      "pack": "Minimap_Pack",
+      "category": "tilesets",
+      "files_copied": 168
+    },
+    {
+      "pack": "Mobile_Controls",
+      "category": "sprites",
+      "files_copied": 1435
+    },
+    {
+      "pack": "Modular_Buildings",
+      "category": "sprites",
+      "files_copied": 554
+    },
+    {
+      "pack": "Modular_Characters",
+      "category": "sprites",
+      "files_copied": 456
+    },
+    {
+      "pack": "Modular_Dungeon_Kit",
+      "category": "tilesets",
+      "files_copied": 209
+    },
+    {
+      "pack": "Modular_Space_Kit",
+      "category": "sprites",
+      "files_copied": 214
+    },
+    {
+      "pack": "Monochrome_Pirates",
+      "category": "sprites",
+      "files_copied": 426
+    },
+    {
+      "pack": "Monochrome_RPG",
+      "category": "sprites",
+      "files_copied": 434
+    },
+    {
+      "pack": "Monster_Builder_Pack",
+      "category": "sprites",
+      "files_copied": 367
+    },
+    {
+      "pack": "Music_Jingles",
+      "category": "audio",
+      "files_copied": 89
+    },
+    {
+      "pack": "Nature_Kit",
+      "category": "sprites",
+      "files_copied": 3618
+    },
+    {
+      "pack": "New_Platformer_Pack",
+      "category": "tilesets",
+      "files_copied": 1333
+    },
+    {
+      "pack": "Particle_Pack",
+      "category": "effects",
+      "files_copied": 195
+    },
+    {
+      "pack": "Pattern_Pack",
+      "category": "sprites",
+      "files_copied": 256
+    },
+    {
+      "pack": "Pattern_Pack_Lines",
+      "category": "sprites",
+      "files_copied": 192
+    },
+    {
+      "pack": "Pattern_Pack_Pixel",
+      "category": "sprites",
+      "files_copied": 137
+    },
+    {
+      "pack": "Physics_Assets",
+      "category": "sprites",
+      "files_copied": 369
+    },
+    {
+      "pack": "Pico-8_City",
+      "category": "sprites",
+      "files_copied": 370
+    },
+    {
+      "pack": "Pico-8_Platformer",
+      "category": "tilesets",
+      "files_copied": 313
+    },
+    {
+      "pack": "Pirate_Kit",
+      "category": "sprites",
+      "files_copied": 370
+    },
+    {
+      "pack": "Pirate_Pack",
+      "category": "sprites",
+      "files_copied": 411
+    },
+    {
+      "pack": "Pixel_Line_Platformer",
+      "category": "tilesets",
+      "files_copied": 68
+    },
+    {
+      "pack": "Pixel_Platformer",
+      "category": "tilesets",
+      "files_copied": 252
+    },
+    {
+      "pack": "Pixel_Platformer_Blocks",
+      "category": "tilesets",
+      "files_copied": 338
+    },
+    {
+      "pack": "Pixel_Platformer_Farm_Expansion",
+      "category": "tilesets",
+      "files_copied": 122
+    },
+    {
+      "pack": "Pixel_Platformer_Food_Expansion",
+      "category": "tilesets",
+      "files_copied": 122
+    },
+    {
+      "pack": "Pixel_Platformer_Industrial_Expansion",
+      "category": "tilesets",
+      "files_copied": 122
+    },
+    {
+      "pack": "Pixel_Shmup",
+      "category": "sprites",
+      "files_copied": 155
+    },
+    {
+      "pack": "Pixel_UI_Pack",
+      "category": "ui",
+      "files_copied": 40
+    },
+    {
+      "pack": "Pixel_Vehicle_Pack",
+      "category": "sprites",
+      "files_copied": 87
+    },
+    {
+      "pack": "Planets",
+      "category": "sprites",
+      "files_copied": 57
+    },
+    {
+      "pack": "Platformer_Art_Buildings",
+      "category": "tilesets",
+      "files_copied": 104
+    },
+    {
+      "pack": "Platformer_Art_Candy",
+      "category": "tilesets",
+      "files_copied": 101
+    },
+    {
+      "pack": "Platformer_Art_Deluxe",
+      "category": "tilesets",
+      "files_copied": 1021
+    },
+    {
+      "pack": "Platformer_Art_Extended_Enemies",
+      "category": "tilesets",
+      "files_copied": 186
+    },
+    {
+      "pack": "Platformer_Art_Extended_Tileset",
+      "category": "tilesets",
+      "files_copied": 390
+    },
+    {
+      "pack": "Platformer_Art_Mushrooms",
+      "category": "tilesets",
+      "files_copied": 59
+    },
+    {
+      "pack": "Platformer_Art_Pixel",
+      "category": "tilesets",
+      "files_copied": 908
+    },
+    {
+      "pack": "Platformer_Art_Requests",
+      "category": "tilesets",
+      "files_copied": 104
+    },
+    {
+      "pack": "Platformer_Art_Winter",
+      "category": "tilesets",
+      "files_copied": 102
+    },
+    {
+      "pack": "Platformer_Bricks",
+      "category": "tilesets",
+      "files_copied": 160
+    },
+    {
+      "pack": "Platformer_Characters",
+      "category": "tilesets",
+      "files_copied": 178
+    },
+    {
+      "pack": "Platformer_Kit",
+      "category": "tilesets",
+      "files_copied": 777
+    },
+    {
+      "pack": "Platformer_Pack_Industrial",
+      "category": "tilesets",
+      "files_copied": 240
+    },
+    {
+      "pack": "Platformer_Pack_Medieval",
+      "category": "tilesets",
+      "files_copied": 281
+    },
+    {
+      "pack": "Platformer_Pack_Remastered",
+      "category": "tilesets",
+      "files_copied": 453
+    },
+    {
+      "pack": "Playing_Cards_Pack",
+      "category": "sprites",
+      "files_copied": 291
+    },
+    {
+      "pack": "Prototype_Kit",
+      "category": "sprites",
+      "files_copied": 740
+    },
+    {
+      "pack": "Prototype_Textures",
+      "category": "sprites",
+      "files_copied": 109
+    },
+    {
+      "pack": "Puzzle_Pack_1",
+      "category": "sprites",
+      "files_copied": 181
+    },
+    {
+      "pack": "Puzzle_Pack_2",
+      "category": "sprites",
+      "files_copied": 861
+    },
+    {
+      "pack": "RPG_Audio",
+      "category": "audio",
+      "files_copied": 55
+    },
+    {
+      "pack": "RPG_Base",
+      "category": "sprites",
+      "files_copied": 236
+    },
+    {
+      "pack": "RPG_Urban_Pack",
+      "category": "sprites",
+      "files_copied": 495
+    },
+    {
+      "pack": "Racing_Kit",
+      "category": "sprites",
+      "files_copied": 1263
+    },
+    {
+      "pack": "Racing_Pack",
+      "category": "sprites",
+      "files_copied": 442
+    },
+    {
+      "pack": "Ranks_Pack",
+      "category": "ui",
+      "files_copied": 644
+    },
+    {
+      "pack": "Retro_Fantasy_Kit",
+      "category": "sprites",
+      "files_copied": 562
+    },
+    {
+      "pack": "Retro_Textures_Fantasy",
+      "category": "sprites",
+      "files_copied": 122
+    },
+    {
+      "pack": "Retro_Urban_Kit",
+      "category": "sprites",
+      "files_copied": 693
+    },
+    {
+      "pack": "Road_Textures",
+      "category": "sprites",
+      "files_copied": 281
+    },
+    {
+      "pack": "Robot_Pack",
+      "category": "sprites",
+      "files_copied": 63
+    },
+    {
+      "pack": "Roguelike_Caves_Dungeons",
+      "category": "tilesets",
+      "files_copied": 8
+    },
+    {
+      "pack": "Roguelike_Characters",
+      "category": "sprites",
+      "files_copied": 8
+    },
+    {
+      "pack": "Roguelike_Indoors",
+      "category": "sprites",
+      "files_copied": 8
+    },
+    {
+      "pack": "Roguelike_Modern_City",
+      "category": "sprites",
+      "files_copied": 1044
+    },
+    {
+      "pack": "Roguelike_RPG_pack",
+      "category": "sprites",
+      "files_copied": 11
+    },
+    {
+      "pack": "Rolling_Ball_Assets",
+      "category": "sprites",
+      "files_copied": 129
+    },
+    {
+      "pack": "Rune_Pack",
+      "category": "sprites",
+      "files_copied": 692
+    },
+    {
+      "pack": "Sci-Fi_RTS",
+      "category": "sprites",
+      "files_copied": 265
+    },
+    {
+      "pack": "Sci-fi_Sounds",
+      "category": "audio",
+      "files_copied": 77
+    },
+    {
+      "pack": "Scribble_Dungeons",
+      "category": "tilesets",
+      "files_copied": 283
+    },
+    {
+      "pack": "Scribble_Platformer",
+      "category": "tilesets",
+      "files_copied": 220
+    },
+    {
+      "pack": "Shape_Characters",
+      "category": "sprites",
+      "files_copied": 219
+    },
+    {
+      "pack": "Shooting_Gallery",
+      "category": "sprites",
+      "files_copied": 124
+    },
+    {
+      "pack": "Simple_Space",
+      "category": "sprites",
+      "files_copied": 109
+    },
+    {
+      "pack": "Simplified_Platformer_Pack",
+      "category": "tilesets",
+      "files_copied": 101
+    },
+    {
+      "pack": "Sketch_Desert",
+      "category": "sprites",
+      "files_copied": 252
+    },
+    {
+      "pack": "Sketch_Town",
+      "category": "sprites",
+      "files_copied": 356
+    },
+    {
+      "pack": "Sketch_Town_Expansion",
+      "category": "sprites",
+      "files_copied": 244
+    },
+    {
+      "pack": "Smoke_Particles",
+      "category": "effects",
+      "files_copied": 80
+    },
+    {
+      "pack": "Sokoban",
+      "category": "sprites",
+      "files_copied": 216
+    },
+    {
+      "pack": "Space_Kit",
+      "category": "sprites",
+      "files_copied": 1694
+    },
+    {
+      "pack": "Space_Shooter_Extension",
+      "category": "sprites",
+      "files_copied": 566
+    },
+    {
+      "pack": "Space_Shooter_Remastered",
+      "category": "sprites",
+      "files_copied": 314
+    },
+    {
+      "pack": "Space_Station_Kit",
+      "category": "sprites",
+      "files_copied": 497
+    },
+    {
+      "pack": "Splat_Pack",
+      "category": "sprites",
+      "files_copied": 113
+    },
+    {
+      "pack": "Sports_Pack",
+      "category": "sprites",
+      "files_copied": 238
+    },
+    {
+      "pack": "Survival_Kit",
+      "category": "sprites",
+      "files_copied": 412
+    },
+    {
+      "pack": "Tanks",
+      "category": "sprites",
+      "files_copied": 186
+    },
+    {
+      "pack": "Tappy_Plane",
+      "category": "sprites",
+      "files_copied": 89
+    },
+    {
+      "pack": "Tiny_Battle",
+      "category": "sprites",
+      "files_copied": 208
+    },
+    {
+      "pack": "Tiny_Dungeon",
+      "category": "tilesets",
+      "files_copied": 142
+    },
+    {
+      "pack": "Tiny_Ski",
+      "category": "sprites",
+      "files_copied": 142
+    },
+    {
+      "pack": "Tiny_Town",
+      "category": "sprites",
+      "files_copied": 141
+    },
+    {
+      "pack": "Toon_Characters",
+      "category": "sprites",
+      "files_copied": 698
+    },
+    {
+      "pack": "Top-Down_Tanks",
+      "category": "sprites",
+      "files_copied": 93
+    },
+    {
+      "pack": "Top-down_Shooter",
+      "category": "sprites",
+      "files_copied": 601
+    },
+    {
+      "pack": "Top-down_Tanks_Remastered",
+      "category": "sprites",
+      "files_copied": 391
+    },
+    {
+      "pack": "Tower_Defense",
+      "category": "sprites",
+      "files_copied": 242
+    },
+    {
+      "pack": "Tower_Defense_Kit",
+      "category": "sprites",
+      "files_copied": 812
+    },
+    {
+      "pack": "Tower_Defense_Top-Down",
+      "category": "sprites",
+      "files_copied": 606
+    },
+    {
+      "pack": "Toy_Car_Kit",
+      "category": "sprites",
+      "files_copied": 804
+    },
+    {
+      "pack": "Train_Kit",
+      "category": "sprites",
+      "files_copied": 527
+    },
+    {
+      "pack": "UI_Audio",
+      "category": "audio",
+      "files_copied": 55
+    },
+    {
+      "pack": "UI_Pack",
+      "category": "ui",
+      "files_copied": 1315
+    },
+    {
+      "pack": "UI_Pack_-_Adventure",
+      "category": "ui",
+      "files_copied": 393
+    },
+    {
+      "pack": "UI_Pack_-_Pixel_Adventure",
+      "category": "ui",
+      "files_copied": 519
+    },
+    {
+      "pack": "UI_Pack_-_Sci-Fi",
+      "category": "ui",
+      "files_copied": 1117
+    },
+    {
+      "pack": "UI_Pack_RPG_Expansion",
+      "category": "ui",
+      "files_copied": 94
+    },
+    {
+      "pack": "Voiceover_Pack",
+      "category": "audio",
+      "files_copied": 99
+    },
+    {
+      "pack": "Voiceover_Pack_Fighter",
+      "category": "audio",
+      "files_copied": 50
+    },
+    {
+      "pack": "Voxel_Pack",
+      "category": "sprites",
+      "files_copied": 211
+    },
+    {
+      "pack": "Watercraft_Kit",
+      "category": "sprites",
+      "files_copied": 239
+    },
+    {
+      "pack": "Yellow_Paint_Pack",
+      "category": "sprites",
+      "files_copied": 43
+    }
+  ]
+}
