@@ -7,6 +7,7 @@
 - **引擎**：Unity
 - **目标平台**：PC（Windows/macOS/Linux）、移动端（iOS/Android）
 - **当前阶段**：核心战斗原型验证完成，进入内容与美术填充阶段
+- **必读入口**：`docs/README.md`、`ROADMAP.md`
 
 ## 技术栈
 
@@ -116,7 +117,7 @@ chore: 添加 Visual Studio Editor 包
 2. 小步快跑，每个功能一个提交
 3. 不要提交 `Library/`、`Temp/`、`Obj/`、`Builds/` 等自动生成的文件（已配置 `.gitignore`）
 4. 提交前运行 Unity，确保没有编译错误
-5. 重大修改前先写计划或更新 `docs/roadmap.md`
+5. 重大修改前先更新 `docs/current-state.md` 和 `ROADMAP.md`
 
 ## 美术与资源规范
 
@@ -153,8 +154,10 @@ chore: 添加 Visual Studio Editor 包
 ## 文档维护
 
 - 新增系统或重要修改时，更新 `docs/current-state.md`
-- 长期计划更新 `docs/roadmap.md`
+- 长期计划与阶段优先级更新 `ROADMAP.md`
 - 遇到的问题或技术债务记录到 `docs/gaps.md`
+- 当前正在执行的短期计划写到 `docs/swordsman-class-plan.md` 或类似 active plan 文档
+- 已完成的计划文档及时删除，避免与现状混淆
 
 ## 沟通原则
 

@@ -1,240 +1,141 @@
-# Rola Project Roadmap
+# Rola 项目路线图
 
-**Project:** Rola (2D Action Roguelike)  
-**Unity Version:** 2022.3.62f3c1 (2D URP)  
-**Last Updated:** 2026-06-17  
-**Status:** Core gameplay complete, all art is placeholder
-
----
-
-## Current State
-
-TestArena scene is fully playable. All core systems are implemented and functional:
-
-- **Player:** Move (A/D), Jump (Space), Attack (Fire1), Air Slam (Fire2), Dash (Shift)
-- **Enemy:** Patrol, Chase, Attack AI with sight/attack range
-- **Combat:** Hit-stop, camera shake, knockback, damage numbers
-- **Roguelike Loop:** RunManager, PlayerStats, PlayerBuild, Class system
-- **Code:** 49 scripts, all compile, no errors
-- **Visuals:** All placeholders (white/blue/red sprites)
-- **Audio:** None assigned
-- **UI:** None in scene
-- **Animation:** No AnimatorControllers assigned
+**项目**：Rola（2D 横版动作 Roguelike）  
+**Unity 版本**：2022.3.62f3c1（2D URP）  
+**当前状态**：核心战斗与肉鸽框架完成，美术全占位，MCP 不可用  
+**最后更新**：2026-06-17
 
 ---
 
-## Phase 1: Art Assets (Immediate Priority)
+## 当前阶段
 
-**Goal:** Replace all placeholder sprites with real art. No MCP needed.
+**美术填充与职业内容落地。**
 
-**What this unblocks:** Animation, UI, and polish phases.
+TestArena 已可玩：移动、跳跃、冲刺、地面/空中连招、下劈、敌人 AI、打击感反馈均已实现。现在需要把占位资源替换为真实内容，并创建第一个可玩职业「剑士」。
 
-- [ ] **Player Character Sprite Sheet**
-  - Required states: Idle (1+ frames), Run (6+ frames), Jump (1+), Fall (1+), Attack1/2/3 (2+ each), AirAttack1/2 (2+ each), AirSlam (2+), Dash (2+), Hurt (1+), Dead (1+)
-  - Import to: `Assets/Sprites/Player/`
-  - Settings: Texture Type = Sprite (2D and UI), PPU = 32 or 64, Filter Mode = Point, Compression = None
-  - See `ASSETS_GUIDE.md` for body part system details (9 sortable slots)
-
-- [ ] **Enemy Sprite Sheet**
-  - Required states: Idle, Patrol/Run, Attack (2+ frames), Hurt, Dead
-  - Import to: `Assets/Sprites/Enemy/`
-  - Same import settings as player
-
-- [ ] **Ground / Platform Tileset**
-  - Ground_Main, Ground_Left, Ground_Right sprites
-  - Import to: `Assets/Sprites/Environment/`
-  - Replace on scene objects: Ground_Main, Ground_Left, Ground_Right
-
-- [ ] **VFX Sprites**
-  - SlashEffect: white slash shape, transparent background
-  - HitEffect: spark/blood particles
-  - DeathEffect: dust/particles
-  - Import to: `Assets/Sprites/VFX/`
-
-- [ ] **UI Sprites**
-  - Health bar frame / fill bar
-  - Skill icon placeholders (4 slots)
-  - Class icon for Warrior
-  - Import to: `Assets/Sprites/UI/`
+当前 active 计划见 `docs/swordsman-class-plan.md`。
 
 ---
 
-## Phase 2: Animation
+## 阶段 1：美术资源（高优先级）
 
-**Goal:** Create AnimatorControllers and wire them to Player/Enemy.  
-**Prerequisite:** Phase 1 complete (sprites imported).
+**目标**：替换所有占位 Sprite。  
+**阻塞**：后续动画、UI、 polish 都依赖此阶段。
 
-**What this unblocks:** Visual feedback for all actions, state-based transitions.
-
-- [ ] **Create `PlayerAnimatorController`**
-  - States: Idle, Run, Jump, Fall, Attack1, Attack2, Attack3, AirAttack1, AirAttack2, AirSlam, Dash, Hurt, Dead
-  - Parameters: Speed (float), IsGrounded (bool), VerticalVelocity (float), IsAttacking (bool), ComboIndex (int), IsDashing (bool), IsHurt (bool), IsDead (bool), State (int)
-  - Assign to Player.prefab -> Visuals -> Animator component
-
-- [ ] **Create `EnemyAnimatorController`**
-  - States: Idle, Patrol, Chase, Attack, Hurt, Dead
-  - Parameters: Speed (float), IsGrounded (bool), IsAttacking (bool), IsHurt (bool), IsDead (bool), State (int)
-  - Assign to Enemy.prefab -> Visuals -> Animator component
-
-- [ ] **Verify animation events**
-  - Attack animation should fire damage at correct frame (check `AttackData` on PlayerController/EnemyController)
-  - Hurt/Dead should transition properly
-
----
-
-## Phase 3: Audio
-
-**Goal:** Add sound effects for all gameplay actions.  
-**Prerequisite:** None (can be done in parallel with art).
-
-**What this unblocks:** Game feel and feedback.
-
-- [ ] **Import AudioClips**
-  - Jump, Attack (3 variants), Dash, Hurt (player), Hurt (enemy), Enemy Attack, Enemy Death
-  - Import to: `Assets/Audio/SFX/`
-  - Format: Short WAV or compressed OGG, stereo or mono
-
-- [ ] **Configure AudioManager**
-  - Currently an empty GameObject created by `GameInitializer`
-  - Add AudioSource components or configure `AudioManager` script fields
-  - Assign clips to SFX slots
-
-- [ ] **Assign clips to controllers**
-  - PlayerController: jumpSFX, attackSFX, dashSFX, hurtSFX
-  - EnemyController: attackSFX, hurtSFX, deathSFX
+- [ ] 玩家角色 Sprite Sheet
+  - Idle、Run（6+ 帧）、Jump、Fall、Attack1/2/3、AirAttack1/2、AirSlam、Dash、Hurt、Dead
+  - 导入 `Assets/Sprites/Player/`
+- [ ] 敌人 Sprite Sheet
+  - Idle、Patrol/Run、Attack、Hurt、Dead
+  - 导入 `Assets/Sprites/Enemy/`
+- [ ] 场景 Tileset
+  - Ground_Main、Ground_Left、Ground_Right
+  - 导入 `Assets/Sprites/Environment/`
+- [ ] VFX Sprite
+  - SlashEffect、HitEffect、DeathEffect
+  - 导入 `Assets/Sprites/VFX/`
+- [ ] UI Sprite
+  - 血条框/填充、4 个技能图标占位、职业图标
+  - 导入 `Assets/Sprites/UI/`
 
 ---
 
-## Phase 4: UI
+## 阶段 2：动画系统
 
-**Goal:** Create in-game UI and menu scenes.  
-**Prerequisite:** Phase 1 (UI sprites) and Phase 3 (optional, for menu SFX).
+**目标**：创建 AnimatorController 并绑定到 Player/Enemy。  
+**前置**：阶段 1 的 Sprite 已导入。
 
-**What this unblocks:** Playable user experience, health feedback, pause/menu flow.
-
-- [ ] **Create Canvas in TestArena scene**
-  - GameObject -> UI -> Canvas (Screen Space - Overlay)
-  - Add CanvasScaler (reference resolution 1920x1080)
-  - Add GraphicRaycaster
-
-- [ ] **Create HealthBar**
-  - Create GameObject under Canvas
-  - Add `HealthBar` script (`Assets/Scripts/HealthBar.cs`)
-  - Wire to `PlayerStats.OnHPChanged` event
-  - Assign health bar frame and fill sprites
-
-- [ ] **Create PauseMenu**
-  - Create UI panel with Resume, Restart, Quit buttons
-  - Add `PauseMenu` script
-  - Hook to Escape key input
-
-- [ ] **Create MainMenu scene**
-  - New scene: `Assets/Scenes/MainMenu.unity`
-  - Add title, Start Game, Settings, Quit buttons
-  - Add `MainMenu` script
-  - Configure Build Settings to include MainMenu scene
+- [ ] 创建 `PlayerAnimatorController`
+  - 状态：Idle、Run、Jump、Fall、Attack1/2/3、AirAttack1/2、AirSlam、Dash、Hurt、Dead
+  - 参数：Speed、IsGrounded、VerticalVelocity、IsAttacking、ComboIndex、IsDashing、IsHurt、IsDead
+- [ ] 创建 `EnemyAnimatorController`
+  - 状态：Idle、Patrol、Chase、Attack、Hurt、Dead
+- [ ] 配置攻击动画事件，确保命中帧与 `AttackData` 对齐
+- [ ] 赋值到 Player.prefab / Enemy.prefab
 
 ---
 
-## Phase 5: Content
+## 阶段 3：音频
 
-**Goal:** Fill data assets with real content and create additional classes.  
-**Prerequisite:** Phase 1 (appearance sprites).
+**目标**：为所有游戏行为添加音效。  
+**前置**：无，可与美术并行。
 
-**What this unblocks:** Class selection, meaningful run progression, replayability.
-
-- [ ] **Create `Appearance_Warrior` CharacterAppearanceData**
-  - Right-click in Project -> Create -> Rola -> Character Appearance Data
-  - Assign body part sprites (or single full-body sprite to `bodySprite`)
-  - Set skinColor, hairColor, eyeColor
-  - Save to `Assets/Data/Appearance_Warrior.asset`
-
-- [ ] **Assign appearance to Class_Warrior**
-  - Select `Assets/Data/Class_Warrior.asset`
-  - Drag `Appearance_Warrior` into `Default Appearance` field
-
-- [ ] **Create starting skills for Warrior**
-  - Create SkillData ScriptableObjects (Assets -> Create -> Rola -> Skill Data)
-  - Assign to `Class_Warrior.startingSkills` array
-
-- [ ] **Create starting equipment for Warrior**
-  - Create EquipmentData ScriptableObjects
-  - Assign to `Class_Warrior.startingEquipment` array
-
-- [ ] **Create additional classes**
-  - Mage, Archer, etc.
-  - Create appearance data, skills, equipment for each
-  - Add to `RunManager` or class selection UI
+- [ ] 导入 SFX：Jump、Attack（3 变体）、Dash、Hurt、Enemy Attack、Enemy Hurt、Enemy Death
+- [ ] 配置 `AudioManager` 并赋值 AudioClip
+- [ ] 在 `PlayerController` / `EnemyController` 中指定对应音效字段
 
 ---
 
-## Phase 6: Polish
+## 阶段 4：UI
 
-**Goal:** Tune feel, add juice, and expand content.  
-**Prerequisite:** All prior phases.
+**目标**：把 UI 脚本真正挂到场景里。  
+**前置**：阶段 1 的 UI Sprite。
 
-**What this unblocks:** Shippable quality.
-
-- [ ] **Camera Tuning**
-  - Adjust `CameraFollow` smoothing, offset, and bounds on `Main Camera`
-  - Test with fast movement and combat
-
-- [ ] **Hit-Stop Tuning**
-  - Adjust `HitStopManager` durations per attack type in `AttackData`
-  - Ensure it feels impactful but not disruptive
-
-- [ ] **Particle Effects**
-  - Add ParticleSystem components to HitEffect/DeathEffect prefabs
-  - Configure emission, color, lifetime
-
-- [ ] **2D Lighting & Post-Processing**
-  - Add 2D lights to scene (Global light, player point light)
-  - Configure URP 2D Renderer post-processing if needed
-
-- [ ] **Level Design**
-  - Expand TestArena with more platforms, enemy spawn points
-  - Add checkpoint objects
-  - Add death zone (fall off screen)
-  - Design additional scenes/levels
-
-- [ ] **Build & Test**
-  - Configure Build Settings scenes
-  - Test standalone build
-  - Balance HP, damage, move speeds
+- [ ] 在 TestArena 创建 Canvas
+- [ ] 创建 HealthBar，绑定 `PlayerStats.OnHPChanged`
+- [ ] 创建 PauseMenu，绑定 Escape 键
+- [ ] 创建 MainMenu 场景，加入 Build Settings
 
 ---
 
-## Quick Reference: What Works Now
+## 阶段 5：内容填充
 
-| Feature | Status | How to Test |
-|---------|--------|-------------|
-| Player movement | Working | A/D move, Space jump, Shift dash |
-| Player combat | Working | Fire1 attack (3-hit combo), Fire2 air slam |
-| Enemy AI | Working | Enemy patrols, chases, attacks |
-| Combat feedback | Working | Hit-stop, knockback, camera shake, damage numbers |
-| Roguelike loop | Working | RunManager starts run, PlayerStats tracks HP/gold |
-| Class system | Code only | Class_Warrior exists but empty |
-| Save/load | Code only | No persistent save system yet |
+**目标**：创建第一个可玩职业与相关数据资产。  
+**前置**：阶段 1 的外观 Sprite。  
+**当前 active 计划**：`docs/swordsman-class-plan.md`
 
-## Quick Reference: What Needs Manual Work
-
-| Task | Location | Notes |
-|------|----------|-------|
-| Replace placeholder sprites | `Assets/Prefabs/Player.prefab`, `Enemy.prefab` | Drag new sprites to SpriteRenderer |
-| Create AnimatorControllers | `Assets/Animation/` | Create in Animator window, assign to prefabs |
-| Add UI to scene | `TestArena` scene | Create Canvas + HealthBar GameObjects |
-| Assign audio clips | `AudioManager` GameObject | Created empty by GameInitializer |
-| Fill Class_Warrior data | `Assets/Data/Class_Warrior.asset` | Add appearance, skills, equipment |
+- [ ] 创建 `Appearance_Swordsman` CharacterAppearanceData
+- [ ] 创建剑士各部位 CharacterPartData 占位资产
+- [ ] 创建 `Skill_QuickSlash`
+- [ ] 创建初始装备 `Equipment_TrainingSword`、`Equipment_LeatherArmor`
+- [ ] 填充 `Class_Warrior` / 新建 `Class_Swordsman`
+- [ ] 配置 `RunManager.defaultClass`
 
 ---
 
-## Next Recommended MCP Session
+## 阶段 6：打磨
 
-When MCP is available again, the highest-value automated tasks are:
+**目标**：手感、性能、视觉 polish。  
+**前置**：前述阶段基本完成。
 
-1. **Create UI Canvas + HealthBar** in TestArena scene (scene object creation)
-2. **Create AnimatorControllers** with all states and parameters (asset creation + prefab assignment)
-3. **Bulk-create ScriptableObjects** for skills, equipment, appearances (data assets)
-4. **Add AudioManager clips** and wire to controllers (component field assignment)
+- [ ] 相机跟随参数调优
+- [ ] 打击停顿时长调优
+- [ ] 粒子系统配置
+- [ ] 2D 光照与后处理
+- [ ] 扩展 TestArena：平台、敌人出生点、Checkpoint、DeathZone
+- [ ] 独立构建测试
 
-Until then, all art asset creation can proceed manually through the Unity Editor.
+---
+
+## 当前服务器限制
+
+- 当前环境**无法运行 Unity Editor**，MCP 不可用。
+- 所有需要 Unity Editor 的操作（场景编辑、Prefab 修改、动画状态机、Sprite 导入设置）必须到本地 PC 完成。
+- 当前环境适合做的事：
+  - 编写 C# 脚本与编辑器辅助工具
+  - 创建/修改 YAML 格式的 `.asset` 数据资产
+  - 文档整理
+  - 代码审查与静态检查
+
+---
+
+## 快速参考：谁做什么
+
+| 任务类型 | 负责人/环境 | 示例 |
+|---|---|---|
+| 代码与数据资产 | 当前服务器 / OpenCode | 编辑器脚本、.asset YAML、C# 逻辑 |
+| 场景/Prefab/动画/导入 | 本地 Unity Editor + MCP | Canvas 创建、AnimatorController、Sprite 设置 |
+| 美术资源产出 | 美术工具 | Sprite Sheet、Tileset、UI 素材 |
+| 音频资源 | 音频工具 | WAV/OGG 音效、BGM |
+
+---
+
+## 文档索引
+
+- 项目规范：`AGENTS.md`
+- 当前完成：`docs/current-state.md`
+- 长期欠缺：`docs/gaps.md`
+- 当前计划：`docs/swordsman-class-plan.md`
+- 脚本速查：`SCRIPTS_REFERENCE.md`
+- 美术规范：`ASSETS_GUIDE.md`
+- MCP 工作流：`CLAUDE.md`
