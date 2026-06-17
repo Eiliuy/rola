@@ -54,12 +54,11 @@
 
 ---
 
-## 注意事项
+## 状态备注
 
-1. 优先使用 **CC0** 素材，避免署名/授权纠纷。
-2. 使用 `tools/asset-crawlers/` 下载时，会自动记录来源和许可证到 `manifest.json`。
-3. 手动下载的素材请在本文件追加一行记录。
-4. 不要把原始素材文件直接提交到 Git；素材包应作为本地资源或放到统一存储。
+- **Kenney.nl**：✅ 已批量下载 207 个 CC0 包，清单见 `tools/asset-crawlers/downloads/manifest.json`。
+- **Pixabay**：⏸️ 已实现但未运行，需要 `PIXABAY_API_KEY` 环境变量。
+- **itch.io**：⏸️ 已实现列表抓取，但免费资源下载按钮多为 JS 动态加载，需要进一步用 API/headless 处理；目前仅修复 URL 和异常链接过滤。
 
 ---
 
