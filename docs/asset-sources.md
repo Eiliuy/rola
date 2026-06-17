@@ -57,7 +57,7 @@
 ## 状态备注
 
 - **Kenney.nl**：✅ 已批量下载 207 个 CC0 包，清单见 `tools/asset-crawlers/downloads/manifest.json`。
-- **Pixabay**：⏸️ 已实现但未运行，需要 `PIXABAY_API_KEY` 环境变量。
+- **Pixabay**：✅ 已用 API Key 下载约 80 张参考图片（关键词：sword slash / cyberpunk character / sci fi background / explosion effect / ui button / game icon）。Pixabay 标准 API 无独立 music 端点，音频需额外处理。
 - **itch.io**：⏸️ 已实现列表抓取，但免费资源下载按钮多为 JS 动态加载，需要进一步用 API/headless 处理；目前仅修复 URL 和异常链接过滤。
 
 ---
@@ -102,3 +102,25 @@ Rola 战斗原型可优先使用的包：
 | UI Audio / Digital Audio / RPG Audio | 音效与 BGM |
 
 （完整 207 条记录见 manifest.json）
+
+### Pixabay（已用 API Key 下载图片）
+
+- **下载时间**：2026-06-17
+- **API Key**：已配置（环境变量 `PIXABAY_API_KEY`）
+- **图片数量**：约 80 张
+- **总大小**：约 37 MB
+- **许可证**：Pixabay License / CC0（pre-2019）
+- **本地路径**：`tools/asset-crawlers/downloads/pixabay/image/`
+- **清单文件**：`tools/asset-crawlers/downloads/manifest.json`
+
+搜索关键词：
+
+| 关键词 | 用途 |
+|---|---|
+| `sword slash` / `sword` | 刀剑、挥砍参考 |
+| `cyberpunk character` | 赛博朋克角色参考 |
+| `sci fi background` | 科幻场景/背景 |
+| `explosion effect` | 爆炸/特效参考 |
+| `ui button` / `game icon` | UI 元素参考 |
+
+- **注意**：Pixabay 标准 API 不区分 music 类型，`--type music` 实际返回图片结果；如需音频需用 Pixabay Music 独立端点或搜索 `music` 关键词的图片/视频封面。

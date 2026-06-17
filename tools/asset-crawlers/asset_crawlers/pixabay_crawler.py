@@ -52,23 +52,24 @@ class PixabayCrawler(BaseCrawler):
             if not hits:
                 break
 
-            for hit in hits:
-                if media_type == "video":
-                    url = hit.get("videos", {}).get("medium", {}).get("url", "")
-                elif media_type == "music":
-                    # Pixabay music API 与 image 共享端点，但返回的是音频
-                    url = hit.get("previewURL", "") or hit.get("largeImageURL", "")
-                else:
-                    url = hit.get("largeImageURL", "")
+        for hit in hits:
+            if media_type == "video":
+                url = hit.get("videos", {}).get("large", {}).get("url", "") or hit.get("videos", {}).get("medium", {}).get("url", "")
+            elif media_type == "music":
+                # Pixabay 标准 API 没有独立的 music 端点，music 搜索会混在 image 结果里
+                # 取封面图/预览图作为占位（如需音频需通过 Pixabay Music 单独下载）
+                url = hit.get("largeImageURL", "") or hit.get("webformatURL", "")
+            else:
+                url = hit.get("largeImageURL", "") or hit.get("webformatURL", "")
 
-                if url:
-                    results.append({
-                        "id": hit.get("id"),
-                        "title": hit.get("tags", query),
-                        "url": url,
-                        "page_url": hit.get("pageURL", ""),
-                        "type": media_type,
-                    })
+            if url:
+                results.append({
+                    "id": hit.get("id"),
+                    "title": hit.get("tags", query),
+                    "url": url,
+                    "page_url": hit.get("pageURL", ""),
+                    "type": media_type,
+                })
 
             print(f"  found {len(hits)} items, total {len(results)}")
             time.sleep(self.delay)
